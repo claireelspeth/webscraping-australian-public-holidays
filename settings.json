@@ -1,0 +1,20 @@
+{
+    "custom_start_year": "",
+    "default_start_year_comment": "current_year_minus_seven",
+    "custom_end_year": 2024,
+    "default_end_year_comment": "current_year_plus_one",
+    "states": [
+        "QLD",
+        "NSW",
+        "VIC",
+        "WA",
+        "TAS",
+        "SA",
+        "ACT",
+        "NT"
+    ],
+    "default_local_regions_comment": "state = capital city for each state/territory",
+    "additional_local_regions": [
+        "QLD - GOLD COAST"
+    ]
+}
