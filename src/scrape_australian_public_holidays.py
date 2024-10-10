@@ -90,9 +90,9 @@ def extractHolidayComment(thisHolidayName, dateComment):
 
 
 def extractHolidayStartTime(thisHolidayComment):
-    partDayRegexPattern = re.compile("^from ((1[0-2]|0?[1-9])([AaPp][Mm])) to midnight")
+    partDayRegexPattern = re.compile("^from ((1[0-2]|0?[1-9])([ap][m])) to midnight")
 
-    partialDayStartTime = partDayRegexPattern.findall(thisHolidayComment)
+    partialDayStartTime = partDayRegexPattern.findall(thisHolidayComment.lower())
 
     if partialDayStartTime:
         holidayStartTime = dt.strptime(
@@ -161,7 +161,7 @@ def appendHolidayNamesAndDates(holidaysList, orderedRegions, mainContent, year):
     return holidaysList
 
 
-def saveExtractedHolidays(holidaysList, regionMapping, runId=""):
+def convertToDataFrame(holidaysList, regionMapping):
     holidaysDataFrame = pl.DataFrame(
         holidaysList,
         schema=[
@@ -183,6 +183,12 @@ def saveExtractedHolidays(holidaysList, regionMapping, runId=""):
         .replace_strict(regionMapping, default=None)
         .alias("region_name"),
     )
+
+    return holidaysDataFrame
+
+
+def saveExtractedHolidays(holidaysList, regionMapping, runId=""):
+    holidaysDataFrame = convertToDataFrame(holidaysList, regionMapping)
 
     if runId == "":
         holidaysDataFrame.write_csv("./data/public_holidays_extraction.csv")

@@ -10,7 +10,6 @@ Limitations:
 * Regional public holidays - remove/add functions?
 * 2020 Show day holidays
 * Queen day of mourning holiday
-* part day public holidays
 * websites for older years not maintained - wayback machine?
 * different formats for different years (code will be limited as to what it can handle)
 
@@ -21,4 +20,6 @@ create virtual environment and install requirements
 `py -m venv .venv` 
 `.\venv\Scripts\activate`
 `pip install -r requirements.txt`
+
+## Run tests
 
