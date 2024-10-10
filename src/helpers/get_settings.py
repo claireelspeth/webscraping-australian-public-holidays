@@ -1,16 +1,17 @@
 import json
 
 from src.helpers.constants import (
-    SETTINGS_FILE_PATH,
     CUSTOM_START_YEAR,
     CUSTOM_END_YEAR,
     STATES_TO_INCLUDE,
     ADDITIONAL_REGIONS,
+    RUN_ID,
+    RUN_MODE,
 )
 
 
-def readJSONSettingsFile():
-    with open(SETTINGS_FILE_PATH) as f:
+def readJSONSettingsFile(settingsFilePath):
+    with open(settingsFilePath) as f:
         return json.load(f)
 
 
@@ -28,6 +29,8 @@ def validateKeys(issues, settings):
         CUSTOM_END_YEAR,
         STATES_TO_INCLUDE,
         ADDITIONAL_REGIONS,
+        RUN_ID,
+        RUN_MODE,
     }
     missingKeys = expectedKeys.difference(settings.keys())
     if missingKeys:

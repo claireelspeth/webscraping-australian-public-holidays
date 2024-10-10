@@ -3,7 +3,6 @@
 Extract Public Holiday Data for Australian States and convert to CSV.
 
 Future development:
-* Wrappers for run status
 * Regional public holidays - remove/add functions?
 * 2020 Show day holidays
 * Queen day of mourning holiday

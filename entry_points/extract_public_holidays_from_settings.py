@@ -4,31 +4,37 @@ import sys
 sys.path.insert(0, os.getcwd())
 
 from src.scrape_australian_public_holidays import extractAndSavePublicHolidays
-from src.helpers.get_settings import readJSONSettingsFile, validateSettings
+from src.helpers.get_settings import (
+    extractSettingValue,
+    readJSONSettingsFile,
+    validateSettings,
+)
 from src.helpers.get_year_range import getYearRange
+from src.helpers.constants import SETTINGS_FILE_PATH
+
+
+if len(sys.argv) > 1:
+    settingsFilePath = sys.argv[1]
+else:
+    settingsFilePath = SETTINGS_FILE_PATH
 
 # read settings
-settings = readJSONSettingsFile()
+settings = readJSONSettingsFile(settingsFilePath)
 issuesWithSettings = validateSettings(settings)
 if issuesWithSettings:
-    print(issuesWithSettings)
+    status = {"runStatus": "error", "errMsg": f"invalid settings {issuesWithSettings}"}
+    print(status)
     exit()
 
 yearRange = getYearRange(settings)
-
-
-# get run modes
-if len(sys.argv) > 1:
-    runId = sys.argv[1]
-else:
-    runId = ""
-
-if len(sys.argv) > 2:
-    runMode = sys.argv[2]
-else:
-    runMode = 2  # [0: scrape and save data, 1: scrape data, 2: use saved data]
+runId = extractSettingValue(settings, "run_id")
+runMode = extractSettingValue(settings, "run_mode")
 
 
 # run script
-status = extractAndSavePublicHolidays(yearRange, runMode, runId)
+try:
+    status = extractAndSavePublicHolidays(yearRange, runMode, runId)
+    status["settings"] = settings
+except Exception as e:
+    status = {"runStatus": "error", "errMsg": e}
 print(status)

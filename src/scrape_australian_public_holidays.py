@@ -183,10 +183,10 @@ def convertToDataFrame(holidaysList, regionMapping):
     return holidaysDataFrame
 
 
-def saveExtractedHolidays(holidaysList, regionMapping, runId=""):
+def saveExtractedHolidays(holidaysList, regionMapping, runId=None):
     holidaysDataFrame = convertToDataFrame(holidaysList, regionMapping)
 
-    if runId == "":
+    if runId is None:
         holidaysDataFrame.write_csv("./data/public_holidays_extraction.csv")
     else:
         holidaysDataFrame.with_columns(pl.lit(runId).alias("runId")).write_csv(
@@ -194,7 +194,7 @@ def saveExtractedHolidays(holidaysList, regionMapping, runId=""):
         )
 
 
-def extractAndSavePublicHolidays(yearRange, runMode=1, runId=""):
+def extractAndSavePublicHolidays(yearRange, runMode=1, runId=None):
     holidaysList = []
 
     for year in yearRange:

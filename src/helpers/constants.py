@@ -8,5 +8,5 @@ CUSTOM_START_YEAR = "custom_start_year"
 CUSTOM_END_YEAR = "custom_end_year"
 STATES_TO_INCLUDE = "states_to_return"
 ADDITIONAL_REGIONS = "additional_local_regions"
-
-
+RUN_ID = "run_id"
+RUN_MODE = "run_mode"

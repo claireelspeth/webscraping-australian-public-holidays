@@ -1,4 +1,7 @@
 {
+    "run_id": "",
+    "run_mode": 2,
+    "run_mode_comment": "0: scrape and save data, 1: scrape data, 2: use saved data",
     "custom_start_year": 2024,
     "default_start_year_comment": "current_year_minus_seven",
     "custom_end_year": 2025,
