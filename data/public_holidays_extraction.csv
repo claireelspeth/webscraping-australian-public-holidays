@@ -1,0 +1,102 @@
+region,year,holiday_name,date,start_time
+ACT,2025,New Year's Day,2025-01-01,00:00
+ACT,2025,Australia Day,2025-01-27,00:00
+ACT,2025,Canberra Day,2025-03-10,00:00
+ACT,2025,Good Friday,2025-04-18,00:00
+ACT,2025,Easter Saturday – the day after Good Friday,2025-04-19,00:00
+ACT,2025,Easter Sunday,2025-04-20,00:00
+ACT,2025,Easter Monday,2025-04-21,00:00
+ACT,2025,Anzac Day,2025-04-25,00:00
+ACT,2025,Reconciliation Day,2025-06-02,00:00
+ACT,2025,King’s Birthday,2025-06-09,00:00
+ACT,2025,Labour Day,2025-10-06,00:00
+ACT,2025,Christmas Day,2025-12-25,00:00
+ACT,2025,Boxing Day,2025-12-26,00:00
+NSW,2025,New Year's Day,2025-01-01,00:00
+NSW,2025,Australia Day,2025-01-27,00:00
+NSW,2025,Good Friday,2025-04-18,00:00
+NSW,2025,Easter Saturday,2025-04-19,00:00
+NSW,2025,Easter Sunday,2025-04-20,00:00
+NSW,2025,Easter Monday,2025-04-21,00:00
+NSW,2025,Anzac Day,2025-04-25,00:00
+NSW,2025,King’s Birthday,2025-06-09,00:00
+NSW,2025,Labour Day,2025-10-06,00:00
+NSW,2025,Christmas Day,2025-12-25,00:00
+NSW,2025,Boxing Day,2025-12-26,00:00
+NT,2025,New Year's Day,2025-01-01,00:00
+NT,2025,Australia Day,2025-01-27,00:00
+NT,2025,Good Friday,2025-04-18,00:00
+NT,2025,Easter Saturday,2025-04-19,00:00
+NT,2025,Easter Sunday,2025-04-20,00:00
+NT,2025,Easter Monday,2025-04-21,00:00
+NT,2025,Anzac Day,2025-04-25,00:00
+NT,2025,May Day,2025-05-05,00:00
+NT,2025,King’s Birthday,2025-06-09,00:00
+NT,2025,Picnic Day,2025-08-04,00:00
+NT,2025,Christmas Eve,2025-12-24,19:00
+NT,2025,Christmas Day,2025-12-25,00:00
+NT,2025,Boxing Day,2025-12-26,00:00
+NT,2025,New Year's Eve,2025-12-31,19:00
+QLD,2025,New Year's Day,2025-01-01,00:00
+QLD,2025,Australia Day,2025-01-27,00:00
+QLD,2025,Good Friday,2025-04-18,00:00
+QLD,2025,The day after Good Friday,2025-04-19,00:00
+QLD,2025,Easter Sunday,2025-04-20,00:00
+QLD,2025,Easter Monday,2025-04-21,00:00
+QLD,2025,Anzac Day,2025-04-25,00:00
+QLD,2025,Labour Day,2025-05-05,00:00
+QLD,2025,Royal Queensland Show,2025-08-13,00:00
+QLD,2025,King’s Birthday,2025-10-06,00:00
+QLD,2025,Christmas Eve,2025-12-24,18:00
+QLD,2025,Christmas Day,2025-12-25,00:00
+QLD,2025,Boxing Day,2025-12-26,00:00
+SA,2025,New Year's Day,2025-01-01,00:00
+SA,2025,Australia Day,2025-01-27,00:00
+SA,2025,Adelaide Cup Day,2025-03-10,00:00
+SA,2025,Good Friday,2025-04-18,00:00
+SA,2025,Easter Saturday,2025-04-19,00:00
+SA,2025,Easter Sunday,2025-04-20,00:00
+SA,2025,Easter Monday,2025-04-21,00:00
+SA,2025,Anzac Day,2025-04-25,00:00
+SA,2025,King’s Birthday,2025-06-09,00:00
+SA,2025,Labour Day,2025-10-06,00:00
+SA,2025,Christmas Eve,2025-12-24,19:00
+SA,2025,Christmas Day,2025-12-25,00:00
+SA,2025,Proclamation Day public holiday / Boxing Day,2025-12-26,00:00
+SA,2025,New Year's Eve,2025-12-31,19:00
+TAS,2025,New Year's Day,2025-01-01,00:00
+TAS,2025,Australia Day,2025-01-27,00:00
+TAS,2025,Royal Hobart Regatta,2025-02-10,00:00
+TAS,2025,Eight Hours Day,2025-03-10,00:00
+TAS,2025,Good Friday,2025-04-18,00:00
+TAS,2025,Easter Monday,2025-04-21,00:00
+TAS,2025,Easter Tuesday,2025-04-22,00:00
+TAS,2025,Anzac Day,2025-04-25,00:00
+TAS,2025,King's Birthday,2025-06-09,00:00
+TAS,2025,Recreation Day,2025-11-03,00:00
+TAS,2025,Christmas Day,2025-12-25,00:00
+TAS,2025,Boxing Day,2025-12-26,00:00
+VIC,2025,New Year's Day,2025-01-01,00:00
+VIC,2025,Australia Day,2025-01-27,00:00
+VIC,2025,Labour Day,2025-03-10,00:00
+VIC,2025,Good Friday,2025-04-18,00:00
+VIC,2025,Saturday before Easter Sunday,2025-04-19,00:00
+VIC,2025,Easter Sunday,2025-04-20,00:00
+VIC,2025,Easter Monday,2025-04-21,00:00
+VIC,2025,Anzac Day,2025-04-25,00:00
+VIC,2025,King's Birthday,2025-06-09,00:00
+VIC,2025,Friday before AFL Grand Final,Subject to AFL schedule (date TBC),00:00
+VIC,2025,Melbourne Cup,2025-11-04,00:00
+VIC,2025,Christmas Day,2025-12-25,00:00
+VIC,2025,Boxing Day,2025-12-26,00:00
+WA,2025,New Year's Day,2025-01-01,00:00
+WA,2025,Australia Day,2025-01-27,00:00
+WA,2025,Labour Day,2025-03-03,00:00
+WA,2025,Good Friday,2025-04-18,00:00
+WA,2025,Easter Sunday,2025-04-20,00:00
+WA,2025,Easter Monday,2025-04-21,00:00
+WA,2025,Anzac Day,2025-04-25,00:00
+WA,2025,Western Australia Day,2025-06-02,00:00
+WA,2025,King's Birthday,2025-09-29,00:00
+WA,2025,Christmas Day,2025-12-25,00:00
+WA,2025,Boxing Day,2025-12-26,00:00

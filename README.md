@@ -6,6 +6,14 @@ Generate a .csv file with the last 7 years and next 1 year of public holidays.
 
 Demonstrate usage of both pandas and polars.
 
+Limitations:
+* Regional public holidays - remove/add functions?
+* 2020 Show day holidays
+* Queen day of mourning holiday
+* part day public holidays
+* websites for older years not maintained - wayback machine?
+* different formats for different years (code will be limited as to what it can handle)
+
 ## Installation
 clone the repo: 
 

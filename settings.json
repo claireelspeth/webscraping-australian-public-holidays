@@ -1,9 +1,10 @@
 {
+    "runId": "",
     "custom_start_year": "",
     "default_start_year_comment": "current_year_minus_seven",
     "custom_end_year": 2024,
     "default_end_year_comment": "current_year_plus_one",
-    "states": [
+    "states_to_return": [
         "QLD",
         "NSW",
         "VIC",
