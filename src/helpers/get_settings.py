@@ -1,10 +1,10 @@
 import json
 
-from constants import (
+from src.helpers.constants import (
     SETTINGS_FILE_PATH,
     CUSTOM_START_YEAR,
     CUSTOM_END_YEAR,
-    STATES,
+    STATES_TO_INCLUDE,
     ADDITIONAL_REGIONS,
 )
 
@@ -26,7 +26,7 @@ def validateKeys(issues, settings):
     expectedKeys = {
         CUSTOM_START_YEAR,
         CUSTOM_END_YEAR,
-        STATES,
+        STATES_TO_INCLUDE,
         ADDITIONAL_REGIONS,
     }
     missingKeys = expectedKeys.difference(settings.keys())
@@ -41,7 +41,7 @@ def validateValues(issues, settings):
         value = extractSettingValue(settings, yearKey)
         if not ((value is None) | (isinstance(value, int))):
             badValues.append(yearKey)
-    for locationKey in [STATES, ADDITIONAL_REGIONS]:
+    for locationKey in [STATES_TO_INCLUDE, ADDITIONAL_REGIONS]:
         value = extractSettingValue(settings, locationKey)
         if not isinstance(value, list):
             badValues.append(locationKey)

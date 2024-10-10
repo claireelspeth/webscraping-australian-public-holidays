@@ -6,11 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 # import Selenium
 
-
-# from src.helpers.constants import STATES
-# from src.helpers.get_settings import readJSONSettingsFile, extractSettingValue
-
-staticStates = ["QLD", "NSW", "VIC", "WA", "TAS", "SA", "ACT", "NT"]
+from src.helpers.constants import STATES as staticStates
 
 
 def saveWebData(soup, year):
@@ -218,9 +214,4 @@ def extractAndSavePublicHolidays(yearRange, runMode=1, runId=""):
 
     saveExtractedHolidays(holidaysList, regionMapping, runId)
 
-
-if __name__ == "__main__":
-    yearRange = [2024, 2025]
-    runMode = 2  # [0: scrape and save data, 1: scrape data, 2: use saved data]
-    runId = ""
-    extractAndSavePublicHolidays(yearRange, runMode, runId)
+    return {"runStatus": "successful"}
