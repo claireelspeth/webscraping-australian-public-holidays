@@ -34,7 +34,7 @@ def validateKeys(issues, settings):
     }
     missingKeys = expectedKeys.difference(settings.keys())
     if missingKeys:
-        issues["missingKeys"] = missingKeys
+        issues["missing_keys"] = missingKeys
 
 
 def validateValues(issues, settings):
@@ -49,7 +49,7 @@ def validateValues(issues, settings):
         if not isinstance(value, list):
             badValues.append(locationKey)
     if badValues:
-        issues["bad value types"] = badValues
+        issues["bad_value_types"] = badValues
 
 
 def validateSettings(settings):
