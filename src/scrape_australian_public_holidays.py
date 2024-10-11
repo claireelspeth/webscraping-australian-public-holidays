@@ -32,6 +32,7 @@ def scrapeWebData(year):
 
 
 def getURL(year):
+    # the following url is expected to work for the previous year, current year and following year
     urlBase = "https://www.fairwork.gov.au/employment-conditions/public-holidays/YEARID-public-holidays"
     url = urlBase.replace("YEARID", str(year))
     return url
@@ -183,9 +184,7 @@ def convertToDataFrame(holidaysList, regionMapping):
     return holidaysDataFrame
 
 
-def saveExtractedHolidays(holidaysList, regionMapping, runId=None):
-    holidaysDataFrame = convertToDataFrame(holidaysList, regionMapping)
-
+def saveExtractedHolidays(holidaysDataFrame, regionMapping, runId=None):
     if runId is None:
         holidaysDataFrame.write_csv("./data/public_holidays_extraction.csv")
     else:
@@ -194,7 +193,11 @@ def saveExtractedHolidays(holidaysList, regionMapping, runId=None):
         )
 
 
-def extractAndSavePublicHolidays(yearRange, runMode=1, runId=None):
+def filterRegions(holidayDf, regionFilter):
+    return holidayDf.filter(pl.col("region").is_in(regionFilter))
+
+
+def extractAndSavePublicHolidays(yearRange, includedRegions, runMode=1, runId=None):
     holidaysList = []
 
     for year in yearRange:
@@ -212,6 +215,8 @@ def extractAndSavePublicHolidays(yearRange, runMode=1, runId=None):
 
         appendHolidayNamesAndDates(holidaysList, orderedRegions, mainContent, year)
 
-    saveExtractedHolidays(holidaysList, regionMapping, runId)
+    holidaysDataFrame = convertToDataFrame(holidaysList, regionMapping)
+    holidaysDataFrame = filterRegions(holidaysDataFrame, includedRegions)
+    saveExtractedHolidays(holidaysDataFrame, regionMapping, runId)
 
     return {"runStatus": "successful"}

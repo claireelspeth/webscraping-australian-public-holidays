@@ -10,7 +10,7 @@ from src.helpers.get_settings import (
     validateSettings,
 )
 from src.helpers.get_year_range import getYearRange
-from src.helpers.constants import SETTINGS_FILE_PATH
+from src.helpers.constants import SETTINGS_FILE_PATH, STATES_TO_INCLUDE, RUN_ID, RUN_MODE
 
 
 if len(sys.argv) > 1:
@@ -27,13 +27,15 @@ if issuesWithSettings:
     exit()
 
 yearRange = getYearRange(settings)
-runId = extractSettingValue(settings, "run_id")
-runMode = extractSettingValue(settings, "run_mode")
+settings["year_range"] = yearRange
+includedRegions = extractSettingValue(settings, STATES_TO_INCLUDE)
+runId = extractSettingValue(settings, RUN_ID)
+runMode = extractSettingValue(settings, RUN_MODE)
 
 
 # run script
 try:
-    status = extractAndSavePublicHolidays(yearRange, runMode, runId)
+    status = extractAndSavePublicHolidays(yearRange, includedRegions, runMode, runId)
     status["settings"] = settings
 except Exception as e:
     status = {"runStatus": "error", "errMsg": e}

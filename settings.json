@@ -8,13 +8,7 @@
     "default_end_year_comment": "current_year_plus_one",
     "states_to_return": [
         "QLD",
-        "NSW",
-        "VIC",
-        "WA",
-        "TAS",
-        "SA",
-        "ACT",
-        "NT"
+        "VIC"
     ],
     "default_local_regions_comment": "state = capital city for each state/territory",
     "additional_local_regions": [
