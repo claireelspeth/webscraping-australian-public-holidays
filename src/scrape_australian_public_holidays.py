@@ -1,6 +1,7 @@
 from datetime import datetime as dt
 import polars as pl
 import pickle
+import os
 import re
 import requests
 from bs4 import BeautifulSoup
@@ -18,17 +19,27 @@ def saveWebData(soup, year):
 
 
 def readSavedWebData(year):
-    with open(f"./data/sample_webpage_soup_{year}.pickle", "rb") as f:
-        soup = pickle.load(f)
-    return soup
+    filename = f"./data/sample_webpage_soup_{year}.pickle"
+    if os.path.isfile(filename):
+        with open(filename, "rb") as f:
+            soup = pickle.load(f)
+            return {"soup": soup}
+    else:
+        return {"soup": None}
 
 
 def scrapeWebData(year):
     url = getURL(year)
-    print(f"extract data for year {year} from {url}")
+    print(f"attempting to extract data for year {year} from {url}")
+
     page = requests.get(url)
-    soup = BeautifulSoup(page.content, "html.parser")
-    return soup
+    if page.status_code == 200:
+        print("...success")
+        return {"soup": BeautifulSoup(page.content, "html.parser")}
+
+    else:
+        print(f"...fail with response code {page.status_code}")
+        return {"soup": None}
 
 
 def getURL(year):
@@ -199,14 +210,22 @@ def filterRegions(holidayDf, regionFilter):
 
 def extractAndSavePublicHolidays(yearRange, includedRegions, runMode=1, runId=None):
     holidaysList = []
+    skippedYears = []
 
     for year in yearRange:
         if runMode == 2:
-            soup = readSavedWebData(year)
+            data = readSavedWebData(year)
         else:
-            soup = scrapeWebData(year)
+            data = scrapeWebData(year)
+
+        if data["soup"] is not None:
+            soup = data["soup"]
             if runMode == 0:
                 saveWebData(soup, year)
+        else:
+            # go to next year if no data found
+            skippedYears.append(str(year))
+            continue
 
         mainContent = soup.find(id="primary-area")
 
@@ -219,4 +238,4 @@ def extractAndSavePublicHolidays(yearRange, includedRegions, runMode=1, runId=No
     holidaysDataFrame = filterRegions(holidaysDataFrame, includedRegions)
     saveExtractedHolidays(holidaysDataFrame, regionMapping, runId)
 
-    return {"runStatus": "successful"}
+    return {"runStatus": "successful", "skippedYears": skippedYears}
