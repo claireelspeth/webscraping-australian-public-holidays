@@ -1,3 +1,5 @@
 .venv/
 **/__pycache__/
-data/
+data/*
+!data/sample_webpage_soup_2022.pickle
+!data/sample_webpage_soup_2025.pickle

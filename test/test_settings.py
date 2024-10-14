@@ -41,7 +41,7 @@ def test_badValues():
 
     print(issues)
 
-    assert ("custom_end_year" in issues["bad_value_types"]) & ~("custom_start_year" in issues['bad_value_types'])
+    assert ("custom_end_year" in issues["bad_value_types"]) & ("custom_start_year" not in issues['bad_value_types'])
 
 def test_validateSettings():
     settings = {"custom_start_year": 2000, "custom_end_year": "2002"}
