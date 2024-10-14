@@ -2,10 +2,10 @@
 
 Extract Public Holiday Data for Australian States and convert to CSV.
 
+TODO: update tests for multiple urls
+
 Future development:
 * Regional public holidays - remove/add functions?
-* 2020 Show day holidays
-* Queen day of mourning holiday
 * more formats if data is not available?
 
 ## Installation

@@ -10,7 +10,13 @@ from src.helpers.get_settings import (
     validateSettings,
 )
 from src.helpers.get_year_range import getYearRange
-from src.helpers.constants import SETTINGS_FILE_PATH, STATES_TO_INCLUDE, RUN_ID, RUN_MODE
+from src.helpers.constants import (
+    SETTINGS_FILE_PATH,
+    SAVED_WEB_PAGES,
+    STATES_TO_INCLUDE,
+    RUN_ID,
+    RUN_MODE,
+)
 
 
 if len(sys.argv) > 1:
@@ -28,14 +34,16 @@ if issuesWithSettings:
 
 yearRange = getYearRange(settings)
 settings["year_range"] = yearRange
-includedRegions = extractSettingValue(settings, STATES_TO_INCLUDE)
+regionsToFilter = extractSettingValue(settings, STATES_TO_INCLUDE)
+savedWebPages = extractSettingValue(settings, SAVED_WEB_PAGES)
 runId = extractSettingValue(settings, RUN_ID)
 runMode = extractSettingValue(settings, RUN_MODE)
 
-extractAndSavePublicHolidays(yearRange, includedRegions, runMode, runId)
 # run script
 try:
-    status = extractAndSavePublicHolidays(yearRange, includedRegions, runMode, runId)
+    status = extractAndSavePublicHolidays(
+        yearRange, regionsToFilter, savedWebPages, runMode, runId
+    )
     status["settings"] = settings
 except Exception as e:
     status = {"runStatus": "error", "errMsg": e}
