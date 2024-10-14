@@ -32,7 +32,7 @@ includedRegions = extractSettingValue(settings, STATES_TO_INCLUDE)
 runId = extractSettingValue(settings, RUN_ID)
 runMode = extractSettingValue(settings, RUN_MODE)
 
-
+extractAndSavePublicHolidays(yearRange, includedRegions, runMode, runId)
 # run script
 try:
     status = extractAndSavePublicHolidays(yearRange, includedRegions, runMode, runId)

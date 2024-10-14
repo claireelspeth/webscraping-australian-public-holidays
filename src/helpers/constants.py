@@ -1,7 +1,19 @@
 SETTINGS_FILE_PATH = "settings.json"
 
 # static data
-STATES = ["QLD", "NSW", "VIC", "WA", "TAS", "SA", "ACT", "NT"]
+STATES_MAPPING = {
+    "ACT": "AUSTRALIAN CAPITAL TERRITORY",
+    "NSW": "NEW SOUTH WALES",
+    "NT": "NORTHERN TERRITORY",
+    "QLD": "QUEENSLAND",
+    "SA": "SOUTH_AUSTRALIA",
+    "TAS": "TASMANIA",
+    "VIC": "VICTORIA",
+    "WA": "WESTERN AUSTRALIA",
+}
+STATES_ALIAS = {v: k for k, v in STATES_MAPPING.items()}
+STATES = STATES_MAPPING.keys()
+
 
 # expected settings
 CUSTOM_START_YEAR = "custom_start_year"
