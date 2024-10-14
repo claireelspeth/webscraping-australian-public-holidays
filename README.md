@@ -6,9 +6,7 @@ Future development:
 * Regional public holidays - remove/add functions?
 * 2020 Show day holidays
 * Queen day of mourning holiday
-* websites for older years not maintained - wayback machine?
-* different formats for different years (code currently limited as to what it can handle)
-
+* more formats if data is not available?
 
 ## Installation
 clone the repo from https://github.com/claireelspeth/webscraping-australian-public-holidays

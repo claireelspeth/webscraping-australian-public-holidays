@@ -9,7 +9,13 @@ from bs4 import BeautifulSoup
 
 from src.helpers.constants import (
     STATES as staticStates,
+    STATES_MAPPING as statesDict,
     STATES_ALIAS as statesAliasDict,
+    PART_TIME_START_TIMES,
+)
+
+partDayStartTimes = pl.DataFrame(
+    PART_TIME_START_TIMES, orient="row", schema=["region", "holiday_name", "start_time"]
 )
 
 
@@ -25,7 +31,7 @@ def readSavedWebData(year):
     # this is hard coded and needs to be generalised
     if year in [2024, 2025]:
         webpage = "fairwork"
-    if year in [2022]:
+    elif year in [2022]:
         webpage = "timeanddate"
     else:
         webpage = None
@@ -228,7 +234,7 @@ def convertToDataFrame(holidaysList, regionMapping):
     return holidaysDataFrame
 
 
-def saveExtractedHolidays(holidaysDataFrame, regionMapping, runId=None):
+def saveExtractedHolidays(holidaysDataFrame, runId=None):
     if runId is None:
         holidaysDataFrame.write_csv("./data/public_holidays_extraction.csv")
     else:
@@ -240,8 +246,11 @@ def saveExtractedHolidays(holidaysDataFrame, regionMapping, runId=None):
 def filterRegions(holidayDf, regionFilter):
     return holidayDf.filter(pl.col("region").is_in(regionFilter))
 
+def sortResults(holidayDf):
+    return holidayDf.sort(["region", "year", "date"])
 
-def extractAndSavePublicHolidays(yearRange, includedRegions, runMode=1, runId=None):
+
+def extractAndSavePublicHolidays(yearRange, regionsToFilter, runMode=1, runId=None):
     holidaysList = []
     skippedYears = []
 
@@ -270,44 +279,42 @@ def extractAndSavePublicHolidays(yearRange, includedRegions, runMode=1, runId=No
             orderedRegions = list(regionMapping.keys())
 
             appendHolidayNamesAndDates(holidaysList, orderedRegions, mainContent, year)
+  
         elif data["webpage"] == "timeanddate":
             # will requires tests
             mainContent = soup.find("table", {"id": "holidays-table"})
             holidaysData = mainContent.find_all("tr")
-            holidaysList = []
 
             for thisHoliday in holidaysData:
-                holidayFound = False
-
-                # print(thisHoliday.attrs)
-                # print(thisHoliday.findChild())
-
                 thList = thisHoliday.find_all("th")
                 tdList = thisHoliday.find_all("td")
-                aList = thisHoliday.find_all("a")
 
                 if len(thList) > 0:
                     thisHolidayDate = thList[0].text
                     if thisHolidayDate == "Date":
                         continue
 
+                    try:
+                        thisHolidayDate = dt.strptime(
+                            f"{thisHolidayDate.strip()} {year}", "%d %b %Y"
+                        ).strftime("%Y-%m-%d")
+
+                    except Exception:
+                        thisHolidayDate = "TBD"
+
                     thisHolidayName = tdList[1].text
-
-                    if thisHolidayName == "Easter Tuesday":
-                        print("is this the Public Sector Holiday")
-                        import pdb
-
-                        pdb.set_trace()
                     thisHolidayType = tdList[2].text
 
                     if not (
                         ("National Holiday" in thisHolidayType)
                         | ("State Holiday" in thisHolidayType)
                         | ("State Public Sector Holiday" in thisHolidayType)
+                        | ("Part Day Holiday" in thisHolidayType)
                     ):
                         continue
+
                     thisHolidayDetails = []
-                    print(f"({thisHolidayDate}, {thisHolidayName}, {thisHolidayType})")
+
                     for details in tdList[3:]:
                         thisHolidayDetails.append(details.text.strip())
                     thisHolidayDetails = ",".join(
@@ -318,8 +325,6 @@ def extractAndSavePublicHolidays(yearRange, includedRegions, runMode=1, runId=No
                             key, statesAliasDict[key]
                         )
 
-                    print(thisHolidayDetails)
-
                     thisHolidayRegions = set(staticStates)
                     thisHolidayComment = ""
                     regionalHolidayFlag = ""
@@ -329,42 +334,76 @@ def extractAndSavePublicHolidays(yearRange, includedRegions, runMode=1, runId=No
                     else:
                         publicServiceFlag = ""
 
+                    if thisHolidayType == "Part Day Holiday":
+                        useDefaultHolidayStartTime = True
+                    else:
+                        useDefaultHolidayStartTime = False
+                    holidayStartTime = "00:00"
+
                     if thisHolidayType != "National Holiday":
                         if "ALL EXCEPT" in thisHolidayDetails:
                             excludedRegions = thisHolidayDetails.replace(
                                 "ALL EXCEPT ", ""
-                            ).split(",")
+                            )
+                            excludedRegions = [
+                                x.strip() for x in excludedRegions.split(",")
+                            ]
                             includedRegions = []
                         else:
                             excludedRegions = []
-                            includedRegions = thisHolidayDetails.split(",")
 
-                        if "*" in thisHolidayDetails:
-                            # this could have bugs if the asterix appears next to one state within a list of states - not yet observed so not yet handled
-                            thisHolidayComment = (
-                                tdList[3]
-                                .find_all("span")[0]
-                                .find_all("span")[0]["title"]
-                            )
-                            thisHolidayDetails = thisHolidayDetails.replace("*", "")
-                            regionalHolidayFlag = "Y"
+                            if "*" in thisHolidayDetails:
+                                # this could have bugs if the asterix appears next to one state within a list of states - not yet observed so not yet handled
+                                thisHolidayComment = (
+                                    tdList[3]
+                                    .find_all("span")[0]
+                                    .find_all("span")[0]["title"]
+                                )
+                                thisHolidayDetails = thisHolidayDetails.replace("*", "")
+                                regionalHolidayFlag = "Y"
+
+                            includedRegions = [
+                                x.strip() for x in thisHolidayDetails.split(",")
+                            ]
 
                         if len(excludedRegions) > 0:
                             thisHolidayRegions = thisHolidayRegions.difference(
                                 excludedRegions
                             )
-                        if len(excludedRegions) > 0:
+                        if len(includedRegions) > 0:
                             thisHolidayRegions = thisHolidayRegions.intersection(
                                 includedRegions
                             )
-                    print("\n")
-               
-            import pdb
 
-            pdb.set_trace()
+                    for thisRegion in thisHolidayRegions:
+                        if useDefaultHolidayStartTime:
+                            try:
+                                holidayStartTime = pl.Series(
+                                    partDayStartTimes.filter(
+                                        pl.col("region") == thisRegion
+                                    )
+                                    .filter(pl.col("holiday_name") == thisHolidayName)
+                                    .select("start_time")
+                                )[0]
+                            except Exception:
+                                holidayStartTime = "TBD"
 
-    holidaysDataFrame = convertToDataFrame(holidaysList, regionMapping)
-    holidaysDataFrame = filterRegions(holidaysDataFrame, includedRegions)
-    saveExtractedHolidays(holidaysDataFrame, regionMapping, runId)
+                        holidaysList.append(
+                            [
+                                thisRegion,
+                                year,
+                                thisHolidayName,
+                                thisHolidayDate,
+                                holidayStartTime,
+                                publicServiceFlag,
+                                regionalHolidayFlag,
+                                thisHolidayComment,
+                            ]
+                        )
+
+    holidaysDataFrame = convertToDataFrame(holidaysList, statesDict)
+    holidaysDataFrame = filterRegions(holidaysDataFrame, regionsToFilter)
+    holidaysDataFrame = sortResults(holidaysDataFrame)
+    saveExtractedHolidays(holidaysDataFrame, runId)
 
     return {"runStatus": "successful", "skippedYears": skippedYears}

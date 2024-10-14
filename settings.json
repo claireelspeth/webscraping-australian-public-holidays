@@ -2,9 +2,17 @@
     "run_id": "",
     "run_mode": 2,
     "run_mode_comment": "0: scrape and save data, 1: scrape data, 2: use saved data",
+    "fairwork_years": [
+        2023,
+        2024,
+        2025
+    ],
+    "timeanddate_years": [
+        2022
+    ],
     "custom_start_year": 2022,
     "default_start_year_comment": "current_year_minus_seven",
-    "custom_end_year": 2022,
+    "custom_end_year": 2025,
     "default_end_year_comment": "current_year_plus_one",
     "states_to_return": [
         "QLD",
@@ -12,6 +20,6 @@
     ],
     "default_local_regions_comment": "state = capital city for each state/territory",
     "additional_local_regions": [
-        "QLD - GOLD COAST"
+        "QLD - GOLD COAST not yet included"
     ]
 }
